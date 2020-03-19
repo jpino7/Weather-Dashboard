@@ -45,6 +45,19 @@ $(document).ready(function () {
             else {
                 answer = "It's BEACH Time!!"
             };
+        // Card info for Today's Weather
+        var today = $(".today")
+        var todayDetails = $("<div>").html(`<div class="card" style="width: 100%; margin-bottom: 20px;">
+            <div class=card-body">
+                <h3>${name}<img src="https://openweathermap.org/img/wn/${icon}@2x.png"></h3>
+                <p class="card-text">Temp: ${temperature}° F</p>
+                <p class="card-text">${humidity}</p>
+                <p class="card-text">${windSpeed}</p>
+                <p class="card-text">Weather or Not: ${answer}</p>
+            </div>
+            </div>`);
+                // Appending today details
+            today.append(todayDetails);
         })
     })
 });
