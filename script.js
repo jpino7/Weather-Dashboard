@@ -29,8 +29,8 @@ $(document).ready(function () {
         $.ajax({
             url: currentQueryURL,
             method: "GET"
-        // Data from AJAX request
-        }).then (function (response){
+            // Data from AJAX request
+        }).then(function (response) {
             // Logging response
             console.log(response);
             var name = response.name;
@@ -45,9 +45,9 @@ $(document).ready(function () {
             else {
                 answer = "It's BEACH Time!!"
             };
-        // Card info for Today's Weather
-        var today = $(".today")
-        var todayDetails = $("<div>").html(`<div class="card" style="width: 100%; margin-bottom: 20px;">
+            // Card info for Today's Weather
+            var today = $(".today")
+            var todayDetails = $("<div>").html(`<div class="card" style="width: 100%; margin-bottom: 20px;">
             <div class=card-body">
                 <h3>${name}<img src="https://openweathermap.org/img/wn/${icon}@2x.png"></h3>
                 <p class="card-text">Temp: ${temperature}° F</p>
@@ -56,8 +56,44 @@ $(document).ready(function () {
                 <p class="card-text">Weather or Not: ${answer}</p>
             </div>
             </div>`);
-                // Appending today details
+            // Appending today details
             today.append(todayDetails);
-        })
+        });
+
+        // Forecast API
+        var forecastQueryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${citySearch}&units=imperial&appid=${apiKey}`
+        // `https://api.openweathermap.org/data/2.5/forecast?q=Tucson,Arizona&units=imperial&appid=8dff60bdfed03c1b84b019f5b557e9e8`
+
+        // Performing AJAX GET request to forecastQueryURL
+        $.ajax({
+            url: forecastQueryURL,
+            method: "GET"
+            // Data from AJAX request
+        }).then(function (response) {
+            // Logging in response
+            console.log(response);
+            for (var i = 0; i < 40; i += 8) {
+                var name = response.city.name;
+                var temp = response.list[i].main.temp + "° F";
+                var humid = response.list[i].main.humidity + "%";
+                var wind = response.list[i].wind.speed + "MPH";
+                var timestamp = response.list[i].dt;
+                var date = moment.unix(timestamp).format("MM/DD/YYYY");
+                var forecastIcon = response.list[i].weather[0].icon;
+                var card = $(".cards")
+                var details = $("<div>").html(`<div class="card" style="width: 130px; float: left; margin: 10px;">
+            <div class="card-body">
+                <h6>${name}</h6>
+                <p class="card-text">${date}</p>
+                <img src="https://openweathermap.org/img/wn/${forecastIcon}@2x.png">
+                <p class="card-text">${temp}</p>
+                <p class="card-text">${humid}</p>
+                <p class="card-text">${wind}</p>
+            </div>
+            </div>`)
+                // Appending card details
+                card.append(details);
+            }
+        });
     })
 });
