@@ -33,7 +33,18 @@ $(document).ready(function () {
         }).then (function (response){
             // Logging response
             console.log(response);
-        }
-
+            var name = response.name;
+            var temperature = response.main.temp;
+            var humidity = "Humidity: " + response.main.humidity + "%";
+            var windSpeed = "Wind Speed: " + response.wind.speed + "MPH";
+            var icon = response.weather[0].icon;
+            var answer = null;
+            if (temperature < 70) {
+                answer = "COVID-19 at its MAX!! Please wash your hands, sanitize, and stay home if feeling sick!!"
+            }
+            else {
+                answer = "It's BEACH Time!!"
+            };
+        })
     })
 });
