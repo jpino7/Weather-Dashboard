@@ -6,3 +6,9 @@ $(document).ready(function () {
     // Insert Date
     const today = new Date();
     $("#date").text(today.toDateString());
+
+    //Event Listener to search button
+    $(".button").on("click", function () {
+        console.log("You got clicked!")
+    })
+});
